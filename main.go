@@ -1,30 +1,31 @@
 package main
 
 import (
-	"context"
+	_ "embed"
 	"log"
-	"os"
-	"os/signal"
-	"time"
 
-	"github.com/roffe/eep/cmd"
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/app"
+	"github.com/hirschmann-koxha-gbr/eep/gui"
 )
+
+//go:embed Icon.png
+var icon []byte
+var appIcon = fyne.NewStaticResource("icon", icon)
 
 func init() {
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
 }
 
 func main() {
-	sig := make(chan os.Signal, 1)
-	signal.Notify(sig, os.Interrupt)
-	ctx, cancel := context.WithCancel(context.TODO())
-
-	go func() {
-		<-sig
-		cancel()
-		time.Sleep(10 * time.Second)
-		os.Exit(1)
-	}()
-
-	cmd.Execute(ctx)
+	application := app.NewWithID("com.cimtool")
+	application.SetIcon(appIcon)
+	//application.Settings().SetTheme(&gui.Theme{})
+	application.Settings().SetTheme(&gui.MyTheme{})
+	ui, err := gui.New(application)
+	if err != nil {
+		log.Fatal(err)
+	}
+	application.Lifecycle().SetOnStarted(ui.CheckUpdate)
+	application.Run()
 }

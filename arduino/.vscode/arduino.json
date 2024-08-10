@@ -1,7 +1,0 @@
-{
-    "sketch": "ardueeprom.ino",
-    "board": "arduino:avr:uno",
-    "port": "COM7",
-    "output": "./build",
-    "programmer": "arduino:avrisp"
-}

@@ -1,11 +1,8 @@
-# Arduino 93Cx6 EEPROM programmer with go cross-platform CLI-tool
+# Saab CIM Tool
 
-![unit](unit.jpg)
-(image has external led on pin13 & push button from other project hooked up)
+![Saab CIM Tool](cim_001.jpg)
 
-    /!\ ORG_16 is not working at the moment, _only__ ORG_8
-
-## Hardware
+## DIY Hardware
 
 * Arduino UNO
 * breadboard
@@ -41,4 +38,6 @@ The red cable on the SOP8 clamp indicates pin 1 and should be orinted to the cor
        1   2   3   4
 
 
-## [Docs](docs/eep.md)
+## Update firmware
+
+    ./avr/avrdude.exe -c arduino -P <port> -b 115200 -p atmega328p -D -U flash:w:firmware/firmware.hex:i
